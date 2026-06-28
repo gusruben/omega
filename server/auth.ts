@@ -7,7 +7,7 @@ const AUTHORIZE_URL = `${ISSUER}/oauth/authorize`;
 const TOKEN_URL = `${ISSUER}/oauth/token`;
 const USERINFO_URL = `${ISSUER}/oauth/userinfo`;
 
-const SCOPES = 'openid profile email verification_status';
+const SCOPES = 'openid profile email verification_status slack_id';
 
 const STATE_COOKIE = 'hc_oauth_state';
 const SESSION_COOKIE = 'hc_session';
@@ -75,7 +75,8 @@ export default async function authRoutes(app: FastifyInstance) {
                 return reply.code(502).send({ error: 'Token exchange failed' })
             }
 
-            const tokens = (await tokenRes.json()) as { access_token: string }
+            const tokens = (await tokenRes.json()) as { access_token: string; scope?: string; id_token?: string }
+            req.log.info({ grantedScope: tokens.scope }, 'token granted scopes') // DEBUG
 
             const userRes = await fetch(USERINFO_URL, {
                 headers: { 'Authorization': `Bearer ${tokens.access_token}` },
@@ -85,6 +86,7 @@ export default async function authRoutes(app: FastifyInstance) {
                 return reply.code(502).send({ error: 'User info fetch failed' })
             }
             const user = (await userRes.json()) as HcUser;
+            req.log.info({ userinfo: user }, 'userinfo response') // DEBUG
 
             reply.setCookie(SESSION_COOKIE, JSON.stringify(user), {
                 path: '/',

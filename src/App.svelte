@@ -1,10 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+    import { stopPropagation } from 'svelte/legacy';
   const target = new Date('2026-07-27T00:00:00').getTime()
   let d = $state('00')
   let h = $state('00')
   let m = $state('00')
   let s = $state('00')
+
+  let menuOpen = $state(false)
 
   const pad = (n: number) => String(n).padStart(2, '0')
 
@@ -24,7 +27,7 @@
   })
 
   // --- Auth ---
-  let user = $state<null | { name?: string }>(null)
+  let user = $state<null | { name?: string; slack_id?: string }>(null)
   let authReady = $state(false)
 
   onMount(async () => {
@@ -66,6 +69,12 @@
     } finally {
       loading = false
     }
+  }
+
+  async function logout() {
+    await fetch('/api/auth/logout', { method: 'POST' })
+    user = null
+    location.reload()
   }
 
   function scrollTo(id: string, e: MouseEvent) {
@@ -177,6 +186,8 @@
   const tickerItems = ['You Ship', 'We Ship', 'Android', 'iOS', 'Build & Ship', 'Earn Badges', 'Shop Rewards', '20+ Hours', 'Tier System']
 </script>
 
+<svelte:window onclick={() => (menuOpen = false)} />
+
 <div class="omega">
   <!-- paper grain overlay -->
   <div class="grain"></div>
@@ -186,6 +197,42 @@
   <!-- Flag -->
   <a href="https://hackclub.com/"><img style="position: absolute; top: 0; left: 10px; border: 0; width: 226px; z-index: 999;" src="https://assets.hackclub.com/flag-orpheus-top.svg" alt="Hack Club"/></a>
 
+  {#if user}
+    <div style="position:fixed; top:16px; right:18px; z-index:70; display:flex; align-items:center; gap:10px;">
+
+      <button
+        onclick={(e) => { e.stopPropagation(); menuOpen = !menuOpen }}
+        title={user.name ?? 'Account'}
+        aria-haspopup="menu"
+        aria-expanded={menuOpen}
+        style="padding:0; border:none; background:none; cursor:pointer; line-height:0; border-radius:50%;"
+        >
+        {#if user.slack_id}
+          <img
+            src={`https://cachet.dunkirk.sh/users/${user.slack_id}/r`}
+            alt={user.name || 'Profile'}
+            referrerpolicy="no-referrer"
+            loading="lazy"
+            style="width:68px; height:68px; border-radius:50%; border:3px solid #1c1714; box-shadow:4px 4px 0 #1c1714; object-fit:cover; background:#fbf4e6; display:block;"
+          />
+        {:else}
+          <div style="width:68px; height:68px; border-radius:50%; border:3px solid #1c1714; box-shadow:4px 4px 0 #1c1714; background:var(--orange); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:1.6rem;">
+            {(user.name ?? '?').charAt(0).toUpperCase()}
+          </div>
+        {/if}
+        </button>
+
+      {#if menuOpen}
+      <div style="position:absolute; top:84px; right:0; min-width:180px; background:#fbf4e6; border:2.5px solid #1c1714; border-radius:14px 9px 15px 10px/10px 15px 9px 14px; box-shadow:5px 5px 0 #1c1714; padding:10px; display:flex; flex-direction:column; gap:8px;">
+        <button
+          onclick={logout}
+          title="Sign out"
+          style="display:inline-flex; align-items:center; gap:6px; background:#fbf4e6; color:#1c1714; border:2.5px solid #1c1714; border-radius:10px 15px 9px 16px/15px 10px 16px 9px; padding:8px 14px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:.8rem; cursor:pointer; box-shadow:3px 3px 0 rgba(28,23,20,.2);"
+        >Sign out</button>
+      </div>
+    {/if}
+    </div>
+  {/if}
   <!-- Hero -->
   <div style="text-align:center; padding:clamp(60px,7vh,92px) 24px clamp(24px,4vh,52px); min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
     {#each heroDecos as deco}
