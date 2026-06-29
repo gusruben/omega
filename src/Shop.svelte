@@ -50,7 +50,6 @@
     tools: { label: 'tools', tagBg: 'rgba(47,109,176,.13)', tagColor: '#2f6db0', iconBg: 'rgba(47,109,176,.13)' },
   } as const
 
-  const ROTS = ['-.6deg', '.7deg', '-.5deg', '.9deg', '-.8deg', '.6deg']
   const RADII = [
     '18px 11px 16px 12px/12px 16px 11px 18px',
     '11px 18px 12px 16px/16px 12px 18px 11px',
@@ -94,7 +93,7 @@
   <div style="max-width:980px; margin:0 auto; padding:48px 24px 8px;">
     <div style="font-size:.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--orange); margin-bottom:10px;">✦ Redeem your hours</div>
     <h1 style="font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(2.2rem,7vw,3.4rem); letter-spacing:-.02em; margin:0; text-shadow:3px 3px 0 rgba(255,69,0,.16);">The Omega Shop</h1>
-    <p style="font-size:1rem; color:#5b4f44; margin:12px 0 0; max-width:560px; line-height:1.6;">Spend the coins you earned from approved hours. Higher tiers = more coins per hour.</p>
+    <p style="font-size:1rem; color:#5b4f44; margin:12px 0 0; max-width:560px; line-height:1.6;">Spend the tokens you earned from approved hours.<br> Higher tiers = more tokens per hour.</p>
 
     <div style="display:flex; gap:9px; flex-wrap:wrap; margin-top:24px;">
       {#each categories as c}
@@ -118,7 +117,7 @@
         {#each shown as item, i (item.id)}
           {@const c = CAT[item.category]}
           {@const soldOut = item.stock !== null && item.stock <= 0}
-          <div style="display:flex; flex-direction:column; background:#fbf4e6; border:2.5px solid #1c1714; border-radius:{RADII[i % RADII.length]}; padding:20px; box-shadow:5px 5px 0 rgba(28,23,20,.13); transform:rotate({ROTS[i % ROTS.length]});">
+          <div style="display:flex; flex-direction:column; background:#fbf4e6; border:2.5px solid #1c1714; border-radius:{RADII[i % RADII.length]}; padding:20px; box-shadow:5px 5px 0 rgba(28,23,20,.13);">
             {#if item.image_url}
                 <img
                     src={item.image_url}

@@ -60,14 +60,6 @@ app.get('/api/signup', async () => {
   return { count: rows[0].count }
 })
 
-app.get('/api/shop/items', async () => {
-  const { rows } = await pool.query(
-    `SELECT id, slug, name, description, cost, category, icon, stock
-      FROM shop_items WHERE active = true ORDER BY sort_order, id`,
-  )
-  return rows
-})  
-
 await migrateShop()
 await seedShop()
 await migrate()

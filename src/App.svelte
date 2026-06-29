@@ -130,8 +130,8 @@
     {
       n: '04',
       r: '52% 48% 50% 50%/45% 52% 48% 55%',
-      title: 'Get reviewed & earn currency',
-      body: 'Reviewers and orgs approve your hours. Currency = approved hours × your tier multiplier.',
+      title: 'Get reviewed & earn Ω tokens',
+      body: 'Reviewers and orgs approve your hours. Ω Tokens = approved hours × your tier multiplier.',
       cta: null,
     },
     {
@@ -175,7 +175,7 @@
 
   const faqs = [
     { q: 'Do I need to build Android AND iOS?', a: "You can build for both, it is not compulsory to create apps for both the platforms" },
-    { q: 'How does shop currency work?', a: 'Approved hours × tier multiplier = currency. Roughly $4–6 per hour. Spend it on anything in the shop.' },
+    { q: 'How does Ω tokens work?', a: 'Approved hours × tier multiplier = Ω tokens. Roughly $4–6 per hour. Spend it on anything in the shop.' },
     { q: 'Can I also submit to other YSWS?', a: 'No. No double dipping with any other YSWS program whatsoever.' },
     { q: "Who's eligible?", a: 'High schoolers or younger. 100% free — funded by Hack Club donors.' },
     { q: 'How much does it cost?', a: 'Nothing. The entire program is free, funded by donations to The Hack Foundation.' },
@@ -330,7 +330,7 @@
     <a href="#how" onclick={(e)=> scrollTo('how', e)} class="btn-ghost" style="..."><div class="eyebrow">✦ How it works</div></a>
     <h2 class="sec-h">Your launch sequence</h2>
     <svg width="220" height="11" viewBox="0 0 220 11" fill="none" style="display:block; margin-bottom:16px;"><path d="M3 7 Q 28 2 52 6 T 104 6 T 156 6 T 214 5" stroke="var(--orange)" stroke-width="3" fill="none" stroke-linecap="round"></path></svg>
-    <p style="font-size:.95rem; color:#5b4f44; margin-bottom:28px; line-height:1.7; max-width:560px;">Build apps on Android and iOS. Reviewers approve your hours, you earn shop currency to spend on what you actually want.</p>
+    <p style="font-size:.95rem; color:#5b4f44; margin-bottom:28px; line-height:1.7; max-width:560px;">Build apps on Android and iOS. Reviewers approve your hours, you earn Ω tokens  to spend on what you actually want.</p>
 
     <div style="display:flex; gap:9px; flex-wrap:wrap; margin-bottom:34px;">
       <span style="display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border:2px solid #1c1714; border-radius:9px 13px 8px 12px/12px 8px 13px 9px; font-weight:700; font-size:.8rem; background:rgba(255,107,53,.14); color:#c2451a; transform:rotate(-1deg);">▲ Android app</span>
